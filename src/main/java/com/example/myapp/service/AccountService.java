@@ -1,0 +1,48 @@
+package com.example.myapp.service;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.myapp.dto.AccountDto;
+import com.example.myapp.entity.Account;
+import com.example.myapp.exception.AccountNotFoundException;
+import com.example.myapp.repository.AccountRepository;
+
+@Service
+@Transactional
+public class AccountService {
+
+	@Autowired
+	private AccountRepository accountRepository;
+
+	public Account create(AccountDto.SignUpReq dto) {
+		if(accountRepository.existsById(dto.getEmail()))
+			throw new DuplicateKeyException(dto.getEmail());
+	    return accountRepository.save(dto.toEntity());
+	}
+
+//	@Transactional(readOnly = true)
+//	public Account findById(long id) {
+//		Example<Account> example = Example.of(Account.builder().id(id).build());
+//	    final Optional<Account> account = accountRepository.findOne(example);
+//	    if (account == null)
+//	        throw new AccountNotFoundException(id);
+//	    return account.get();
+//	}
+	@Transactional(readOnly = true)
+	public Account findById(String email) {
+	    final Account account = accountRepository.getById(email);
+	    if (account == null)
+	        throw new AccountNotFoundException(email);
+	    return account;
+	}
+	
+	public Account updateMyAccount(String email, AccountDto.MyAccountReq dto) {
+	    final Account account = findById(email);
+	    account.updateMyAccount(dto);
+	    return account;
+	}
+}
