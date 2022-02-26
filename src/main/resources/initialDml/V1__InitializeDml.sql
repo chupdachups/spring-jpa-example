@@ -3,7 +3,6 @@
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ACCOUNT`
 (
-  `ID`						VARCHAR(255) NOT NULL,
   `EMAIL`					VARCHAR(255) NOT NULL,
   `FIRST_NAME`				VARCHAR(255) NOT NULL,
   `LAST_NAME`				VARCHAR(255) NOT NULL,

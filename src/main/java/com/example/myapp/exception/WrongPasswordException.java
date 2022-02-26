@@ -1,8 +1,13 @@
 package com.example.myapp.exception;
 
+import lombok.Getter;
+
+@Getter
 public class WrongPasswordException extends RuntimeException{
+	
+	private String email;
 
 	public WrongPasswordException(String email) {
-		super("Email: "+ email +" ----- Password is wrong");
+		this.email = email;
 	}
 }

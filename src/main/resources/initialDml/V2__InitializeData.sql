@@ -1,16 +1,16 @@
 -- -----------------------------------------------------
 -- Data `ACCOUNT`
 -- -----------------------------------------------------
-INSERT INTO ACCOUNT (ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
-VALUES ('1', '호랑이', 'tiger','tiger@korea.com', 'lion', '주소1', '12345', NOW(), NOW(), null);
-INSERT INTO ACCOUNT (ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
-VALUES ('2', '홍길동', 'honggil', 'honggil@korea.com', 'father', '주소2', '12345', NOW(), NOW(), null);
-INSERT INTO ACCOUNT (ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
-VALUES ('3', '강감찬', 'gamchan', 'gamchan@korea.com', 'river','주소3', '12345', NOW(), NOW(), NULL);
-INSERT INTO ACCOUNT (ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
-VALUES ('4', '이순신', 'lee', 'general@korea.com', 'winner', '주소4', '12345', NOW(), NOW(), NULL);
-INSERT INTO ACCOUNT (ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
-VALUES ('5', '태백산', 'mtb', 'mountain@korea.com', 'high', '주소5', '12345', NOW(), NOW(), NULL);
+INSERT INTO ACCOUNT (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
+VALUES ('호랑이', 'tiger','tiger@korea.com', 'lion', '주소1', '12345', NOW(), NOW(), null);
+INSERT INTO ACCOUNT (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
+VALUES ('홍길동', 'honggil', 'honggil@korea.com', 'father', '주소2', '12345', NOW(), NOW(), null);
+INSERT INTO ACCOUNT (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
+VALUES ('강감찬', 'gamchan', 'gamchan@korea.com', 'river','주소3', '12345', NOW(), NOW(), NULL);
+INSERT INTO ACCOUNT (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
+VALUES ('이순신', 'lee', 'general@korea.com', 'winner', '주소4', '12345', NOW(), NOW(), NULL);
+INSERT INTO ACCOUNT (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
+VALUES ('태백산', 'mtb', 'mountain@korea.com', 'high', '주소5', '12345', NOW(), NOW(), NULL);
 -- -----------------------------------------------------
 -- Data `ACCOUNT_ROLE`
 -- -----------------------------------------------------

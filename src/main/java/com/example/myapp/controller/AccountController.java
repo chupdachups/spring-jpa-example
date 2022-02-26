@@ -1,5 +1,7 @@
 package com.example.myapp.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,7 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public AccountDto.Res signUp(@RequestBody final AccountDto.SignUpReq dto) {
+    public AccountDto.Res signUp(@RequestBody @Valid final AccountDto.SignUpReq dto) {
         return new AccountDto.Res(accountService.create(dto));
     }
 

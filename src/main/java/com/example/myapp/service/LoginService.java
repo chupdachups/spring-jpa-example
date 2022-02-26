@@ -21,10 +21,15 @@ public class LoginService {
 	public Account login(AccountDto.LoginReq dto) {
 //		Example<Account> example = Example.of(Account.builder().email(dto.getEmail()).build());
 //	    final Account account = accountRepository.findOne(example).get();
+		
+//		final Account account = loginRepository.getById(dto.getEmail());
+//	    if (account == null || account.getEmail() == null)
+//	        throw new AccountNotFoundException(dto.getEmail());
+		
+		if(!loginRepository.existsById(dto.getEmail()))
+			throw new AccountNotFoundException(dto.getEmail());
+		
 		final Account account = loginRepository.getById(dto.getEmail());
-	    if (account == null)
-	        throw new AccountNotFoundException(dto.getEmail());
-	    
 	    if (!(dto.getPassword().equals(account.getPassword())))
 	    	throw new WrongPasswordException(dto.getEmail());
 	    

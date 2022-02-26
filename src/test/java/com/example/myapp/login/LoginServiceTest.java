@@ -31,7 +31,7 @@ public class LoginServiceTest {
 	public void login_성공() {
 		//given
 		final AccountDto.SignUpReq dto = buildSignUpReq();
-//		given(loginRepository.getById("tiger@korea.com")).willReturn(dto.toEntity());
+		given(loginRepository.existsById(anyString())).willReturn(true);
 		given(loginRepository.getById(anyString())).willReturn(dto.toEntity());
 		
 		//when
@@ -46,7 +46,7 @@ public class LoginServiceTest {
 	@Test
 	public void login_실패_AccountNotFoundException() {
 		//given
-		given(loginRepository.getById(anyString())).willReturn(null);
+		given(loginRepository.existsById(anyString())).willReturn(false);
 		
 		assertThrows(AccountNotFoundException.class,() -> {
 			loginService.login(buildLoginReq());
@@ -58,6 +58,7 @@ public class LoginServiceTest {
 	public void login_실패_WrongPasswordException() {
 		//given
 		final AccountDto.SignUpReq dto = buildSignUpReq();
+		given(loginRepository.existsById(anyString())).willReturn(true);
 		given(loginRepository.getById(anyString())).willReturn(dto.toEntity());
 		
 		assertThrows(WrongPasswordException.class,() -> {

@@ -1,5 +1,7 @@
 package com.example.myapp.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +22,7 @@ public class LoginController {
 	
 	@RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.OK)
-    public AccountDto.Res login(@RequestBody final AccountDto.LoginReq dto) {
+    public AccountDto.Res login(@RequestBody @Valid final AccountDto.LoginReq dto) {
         return new AccountDto.Res(loginService.login(dto));
     }
 }

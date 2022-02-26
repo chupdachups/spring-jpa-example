@@ -1,22 +1,34 @@
 package com.example.myapp.dto;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 import com.example.myapp.entity.Account;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 public class AccountDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class SignUpReq {
+    	
+    	@Email
         private String email;
+    	@NotEmpty
         private String firstName;
+    	@NotEmpty
         private String lastName;
+    	@NotEmpty
         private String password;
+    	@NotEmpty
         private String address1;
+    	@NotEmpty
         private String zip;
 
         @Builder
@@ -57,7 +69,12 @@ public class AccountDto {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class LoginReq {
+    	
+    	@Email
+    	@NonNull
         private String email;
+    	
+    	@NotBlank
         private String password;
 
         @Builder
