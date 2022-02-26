@@ -6,7 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.myapp.dto.AccountDto;
 import com.example.myapp.entity.Account;
-import com.example.myapp.exception.LoginFailException;
+import com.example.myapp.exception.AccountNotFoundException;
+import com.example.myapp.exception.WrongPasswordException;
 import com.example.myapp.repository.LoginRepository;
 
 @Service
@@ -22,10 +23,10 @@ public class LoginService {
 //	    final Account account = accountRepository.findOne(example).get();
 		final Account account = loginRepository.getById(dto.getEmail());
 	    if (account == null)
-	        throw new LoginFailException(dto.getEmail());
+	        throw new AccountNotFoundException(dto.getEmail());
 	    
 	    if (!(dto.getPassword().equals(account.getPassword())))
-	    	throw new LoginFailException(dto.getEmail(), null);
+	    	throw new WrongPasswordException(dto.getEmail());
 	    
 	    return account;
 	}

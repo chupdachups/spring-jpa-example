@@ -2,7 +2,7 @@
 -- Data `ACCOUNT`
 -- -----------------------------------------------------
 INSERT INTO ACCOUNT (ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
-VALUES ('1', '호랑이', 'tiger','tiger@mz.co.kr', 'lion', '주소1', '12345', NOW(), NOW(), null);
+VALUES ('1', '호랑이', 'tiger','tiger@korea.com', 'lion', '주소1', '12345', NOW(), NOW(), null);
 INSERT INTO ACCOUNT (ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)
 VALUES ('2', '홍길동', 'honggil', 'honggil@korea.com', 'father', '주소2', '12345', NOW(), NOW(), null);
 INSERT INTO ACCOUNT (ID, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ADDRESS1, ZIP, CREATED_AT, UPDATED_AT, LATEST_LOGIN_AT)

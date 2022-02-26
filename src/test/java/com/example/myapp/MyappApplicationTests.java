@@ -8,6 +8,7 @@ class MyappApplicationTests {
 
 	@Test
 	void contextLoads() {
+		MyappApplication.main(new String[] {});
 	}
 
 }

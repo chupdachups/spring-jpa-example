@@ -34,7 +34,7 @@ public class AccountService {
 	    return account;
 	}
 	
-	public Account updateMyAccount(String email, AccountDto.MyAccountReq dto) {
+	public Account updateAccount(String email, AccountDto.UpdateAccountReq dto) {
 	    final Account account = findById(email);
 	    account.updateMyAccount(dto);
 	    return account;

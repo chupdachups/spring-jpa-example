@@ -1,6 +1,6 @@
 spring:
   application:
-    name: demoApp
+    name: MyApp
     
 server.port: 8070
 spring.mvc.pathmatch.matching-strategy: ant-path-matcher

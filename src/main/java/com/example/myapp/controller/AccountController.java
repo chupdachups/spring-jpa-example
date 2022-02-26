@@ -27,14 +27,14 @@ public class AccountController {
 
     @RequestMapping(value = "/{email}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-    public AccountDto.Res getUser(@PathVariable final String email) {
+    public AccountDto.Res getAccount(@PathVariable final String email) {
         return new AccountDto.Res(accountService.findById(email));
     }
 
     @RequestMapping(value = "/{email}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
-    public AccountDto.Res updateMyAccount(@PathVariable final String email, @RequestBody final AccountDto.MyAccountReq dto) {
-        return new AccountDto.Res(accountService.updateMyAccount(email, dto));
+    public AccountDto.Res updateMyAccount(@PathVariable final String email, @RequestBody final AccountDto.UpdateAccountReq dto) {
+        return new AccountDto.Res(accountService.updateAccount(email, dto));
     }
 
 }

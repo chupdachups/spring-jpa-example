@@ -43,12 +43,12 @@ public class AccountDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class MyAccountReq {
+    public static class UpdateAccountReq {
         private String address1;
         private String zip;
 
         @Builder
-        public MyAccountReq(String address1, String zip) {
+        public UpdateAccountReq(String address1, String zip) {
             this.address1 = address1;
             this.zip = zip;
         }
