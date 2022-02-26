@@ -25,7 +25,6 @@ import lombok.NonNull;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Account {
 
-//    @Id
     @GeneratedValue
     private long id;
 

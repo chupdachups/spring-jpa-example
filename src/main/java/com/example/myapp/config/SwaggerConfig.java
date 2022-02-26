@@ -15,15 +15,15 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api() {
 		ApiInfo apiInfo = new ApiInfoBuilder()
-				.title("Spring Demo App")
-				.description("Backend Service")
+				.title("Spring My App")
+				.description("SpringBoot + jpa")
 				.version("1.0")
 				.build();
 		
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.example.demo.web"))
+				.apis(RequestHandlerSelectors.basePackage("com.example.myapp.controller"))
 				.paths(PathSelectors.any())
 				.build();		
 		
