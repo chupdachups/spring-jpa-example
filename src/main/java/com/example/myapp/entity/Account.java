@@ -10,6 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.example.myapp.dto.AccountDto;
 
@@ -51,11 +52,10 @@ public class Account {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
     
-    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date latest_login_at;
 
