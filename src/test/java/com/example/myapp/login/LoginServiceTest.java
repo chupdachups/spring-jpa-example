@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -28,7 +29,8 @@ public class LoginServiceTest {
 	private LoginRepository loginRepository;
 	
 	@Test
-	public void login_성공() {
+	@DisplayName("로그인 성공")
+	public void login_success() {
 		//given
 		final AccountDto.SignUpReq dto = buildSignUpReq();
 		given(loginRepository.existsById(anyString())).willReturn(true);
@@ -44,6 +46,7 @@ public class LoginServiceTest {
 	}
 	
 	@Test
+	@DisplayName("로그인 실패 - AccountNotFoundException")
 	public void login_실패_AccountNotFoundException() {
 		//given
 		given(loginRepository.existsById(anyString())).willReturn(false);
@@ -55,6 +58,7 @@ public class LoginServiceTest {
 	}
 	
 	@Test
+	@DisplayName("로그인 실패 - WrongPasswordException")
 	public void login_실패_WrongPasswordException() {
 		//given
 		final AccountDto.SignUpReq dto = buildSignUpReq();
