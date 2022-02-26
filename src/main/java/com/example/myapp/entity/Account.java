@@ -68,7 +68,7 @@ public class Account {
         this.zip = zip;
     }
 
-    public void updateMyAccount(AccountDto.UpdateAccountReq dto) {
+    public void updateAccount(AccountDto.UpdateAccountReq dto) {
         this.address1 = dto.getAddress1();
         this.zip = dto.getZip();
     }
