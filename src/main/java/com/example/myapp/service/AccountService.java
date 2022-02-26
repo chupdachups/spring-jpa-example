@@ -24,16 +24,10 @@ public class AccountService {
 	    return accountRepository.save(dto.toEntity());
 	}
 
-//	@Transactional(readOnly = true)
-//	public Account findById(long id) {
-//		Example<Account> example = Example.of(Account.builder().id(id).build());
-//	    final Optional<Account> account = accountRepository.findOne(example);
-//	    if (account == null)
-//	        throw new AccountNotFoundException(id);
-//	    return account.get();
-//	}
 	@Transactional(readOnly = true)
 	public Account findById(String email) {
+//		Example<Account> example = Example.of(Account.builder().email(email).build());
+//	    final Optional<Account> account = accountRepository.findOne(example).get();
 	    final Account account = accountRepository.getById(email);
 	    if (account == null)
 	        throw new AccountNotFoundException(email);

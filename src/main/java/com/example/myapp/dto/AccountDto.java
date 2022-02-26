@@ -1,7 +1,5 @@
 package com.example.myapp.dto;
 
-
-
 import com.example.myapp.entity.Account;
 
 import lombok.AccessLevel;
