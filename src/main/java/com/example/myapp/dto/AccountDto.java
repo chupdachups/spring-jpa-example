@@ -1,5 +1,6 @@
 package com.example.myapp.dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -21,7 +22,10 @@ public class AccountDto {
     	
     	@Email
         private String email;
+    	
+    	@Valid
     	private Name name;
+    	
     	@NotEmpty
         private String password;
     	@NotEmpty
