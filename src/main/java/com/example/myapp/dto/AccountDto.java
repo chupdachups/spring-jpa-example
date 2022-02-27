@@ -26,8 +26,9 @@ public class AccountDto {
     	@Valid
     	private Name name;
     	
-    	@NotEmpty
+    	@NotBlank
         private String password;
+    	
     	@NotEmpty
         private String address1;
     	@NotEmpty
