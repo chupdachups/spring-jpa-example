@@ -7,7 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -31,6 +34,7 @@ public class AccountServiceTest {
 
 
     @Test
+    @DisplayName("회원가입 성공")
     public void create_회원가입_성공() {
         //given
         final AccountDto.SignUpReq dto = buildSignUpReq();
@@ -40,10 +44,12 @@ public class AccountServiceTest {
         final Account account = accountService.create(dto);
 
         //then
+        verify(accountRepository, atLeastOnce()).save(any(Account.class));
         assertThatEqual(dto, account);
     }
     
     @Test
+    @DisplayName("회원가입 실패 - DuplicateKeyException")
     public void create_회원가입_실패_DuplicateKeyException() {
         //given
         final AccountDto.SignUpReq dto = buildSignUpReqFail();
@@ -55,19 +61,21 @@ public class AccountServiceTest {
     }
     
     @Test
+    @DisplayName("계정조회 - 존재하는 경우")
     public void findById_존재하는경우_계정리턴() {
         //given
         final AccountDto.SignUpReq dto = buildSignUpReq();
         given(accountRepository.getById(anyString())).willReturn(dto.toEntity());
 
         //when
-        final Account account = accountService.findById("tiger@korea.com");
+        final Account account = accountService.findById(anyString());
 
         //then
         assertThatEqual(dto, account);
     }
     
     @Test
+    @DisplayName("계정조회 - 존재 하지 않은 경우")
     public void findById_존재하지않은경우_AccountNotFoundException() {
         //given
         given(accountRepository.getById(anyString())).willReturn(null);
@@ -78,6 +86,7 @@ public class AccountServiceTest {
     }
     
     @Test
+    @DisplayName("계정수정 성공")
     public void updateAccount() {
         //given
         final AccountDto.SignUpReq signUpReq = buildSignUpReq();
@@ -85,7 +94,7 @@ public class AccountServiceTest {
         given(accountRepository.getById(anyString())).willReturn(signUpReq.toEntity());
 
         //when
-        final Account account = accountService.updateAccount("tiger@korea.com", dto);
+        final Account account = accountService.updateAccount(anyString(), dto);
 
         //then
         assertThat(dto.getAddress1(), is(account.getAddress1()));

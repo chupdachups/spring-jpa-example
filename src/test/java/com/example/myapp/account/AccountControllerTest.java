@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -47,6 +48,7 @@ public class AccountControllerTest {
     }
 
     @Test
+    @DisplayName("회원가입")
     public void signUp() throws Exception {
         //given
         final AccountDto.SignUpReq dto = buildSignUpReq();
@@ -66,6 +68,7 @@ public class AccountControllerTest {
     }
     
     @Test
+    @DisplayName("계정조회")
     public void getAccount() throws Exception {
         //given
         final AccountDto.SignUpReq dto = buildSignUpReq();
@@ -85,6 +88,7 @@ public class AccountControllerTest {
     }
     
     @Test
+    @DisplayName("계정수정")
     public void updateAccount() throws Exception {
         //given
         final AccountDto.UpdateAccountReq dto = buildUpdateAccountReq();
