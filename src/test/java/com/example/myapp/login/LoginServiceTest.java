@@ -16,6 +16,7 @@ import com.example.myapp.dto.AccountDto;
 import com.example.myapp.entity.Account;
 import com.example.myapp.exception.AccountNotFoundException;
 import com.example.myapp.exception.WrongPasswordException;
+import com.example.myapp.model.Name;
 import com.example.myapp.repository.LoginRepository;
 import com.example.myapp.service.LoginService;
 
@@ -46,7 +47,7 @@ public class LoginServiceTest {
 	}
 	
 	@Test
-	@DisplayName("로그인 실패 - AccountNotFoundException")
+	@DisplayName("로그인 실패 - 계정이 없는 경우")
 	public void login_실패_AccountNotFoundException() {
 		//given
 		given(loginRepository.existsById(anyString())).willReturn(false);
@@ -58,7 +59,7 @@ public class LoginServiceTest {
 	}
 	
 	@Test
-	@DisplayName("로그인 실패 - WrongPasswordException")
+	@DisplayName("로그인 실패 - 비밀번호 틀린 경우 ")
 	public void login_실패_WrongPasswordException() {
 		//given
 		final AccountDto.SignUpReq dto = buildSignUpReq();
@@ -73,8 +74,7 @@ public class LoginServiceTest {
 
     private AccountDto.SignUpReq buildSignUpReq() {
         return AccountDto.SignUpReq.builder()
-        		.firstName("호랑이")
-    			.lastName("tiger")
+        		.name(Name.builder().first("호랑이").last("tiger").build())
     			.email("tiger@korea.com")
     			.password("lion")
     			.address1("주소1")

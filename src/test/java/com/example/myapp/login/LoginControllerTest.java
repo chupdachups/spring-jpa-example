@@ -24,6 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.example.myapp.controller.LoginController;
 import com.example.myapp.dto.AccountDto;
 import com.example.myapp.entity.Account;
+import com.example.myapp.error.ErrorCode;
+import com.example.myapp.error.ErrorExceptionController;
+import com.example.myapp.model.Name;
 import com.example.myapp.service.LoginService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -44,11 +47,13 @@ public class LoginControllerTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(loginController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(loginController)
+        		.setControllerAdvice(new ErrorExceptionController())
+        		.build();
     }
     
     @Test
-    @DisplayName("로그인")
+    @DisplayName("로그인 성공")
     public void login() throws Exception {
         //given
         final AccountDto.LoginReq dto = buildLoginReq();
@@ -66,8 +71,100 @@ public class LoginControllerTest {
                 .andExpect(jsonPath("$.address1", is(account.getAddress1())))
                 .andExpect(jsonPath("$.zip", is(account.getZip())))
                 .andExpect(jsonPath("$.email", is(account.getEmail())))
-                .andExpect(jsonPath("$.firstName", is(account.getFirstName())))
-                .andExpect(jsonPath("$.lastName", is(account.getLastName())));
+                .andExpect(jsonPath("$.name.first", is(account.getName().getFirst())))
+                .andExpect(jsonPath("$.name.last", is(account.getName().getLast())));
+    }
+    
+    @Test
+    @DisplayName("로그인 실패 - Email 형식이 아닌 경우")
+    public void login_not_email_format() throws Exception {
+        //given
+        final AccountDto.LoginReq dto = buildLoginReqNotEamilFormat();
+        Account account = buildAccount();
+        given(loginService.login(any(AccountDto.LoginReq.class))).willReturn(account);
+
+        //when
+        final ResultActions resultActions = requestLogin(dto);
+        
+        logger.info(resultActions.toString());
+
+        //then
+        resultActions
+        	.andExpect(status().isBadRequest())
+        	.andExpect(jsonPath("$.code", is(ErrorCode.INPUT_VALUE_INVALID.getCode())))
+        	.andExpect(jsonPath("$.status", is(ErrorCode.INPUT_VALUE_INVALID.getStatus())))
+        	.andExpect(jsonPath("$.message", is(ErrorCode.INPUT_VALUE_INVALID.getMessage())))
+        	.andExpect(jsonPath("$.errors[0].field", is("email")))
+        	.andExpect(jsonPath("$.errors[0].value", is(dto.getEmail())));
+    }
+    
+    @Test
+    @DisplayName("로그인 실패 - Password가 null 인 경우")
+    public void login_null_password() throws Exception {
+        //given
+        final AccountDto.LoginReq dto = buildLoginReqNullPassword();
+        Account account = buildAccount();
+        given(loginService.login(any(AccountDto.LoginReq.class))).willReturn(account);
+
+        //when
+        final ResultActions resultActions = requestLogin(dto);
+        
+        logger.info(resultActions.toString());
+
+        //then
+        resultActions
+        	.andExpect(status().isBadRequest())
+        	.andExpect(jsonPath("$.code", is(ErrorCode.INPUT_VALUE_INVALID.getCode())))
+        	.andExpect(jsonPath("$.status", is(ErrorCode.INPUT_VALUE_INVALID.getStatus())))
+        	.andExpect(jsonPath("$.message", is(ErrorCode.INPUT_VALUE_INVALID.getMessage())))
+        	.andExpect(jsonPath("$.errors[0].field", is("password")))
+        	.andExpect(jsonPath("$.errors[0].value", is(dto.getPassword())));
+    }
+    
+    @Test
+    @DisplayName("로그인 실패 - Password가 empty 인 경우")
+    public void login_empty_password() throws Exception {
+        //given
+        final AccountDto.LoginReq dto = buildLoginReqEmptyPassword();
+        Account account = buildAccount();
+        given(loginService.login(any(AccountDto.LoginReq.class))).willReturn(account);
+
+        //when
+        final ResultActions resultActions = requestLogin(dto);
+        
+        logger.info(resultActions.toString());
+
+        //then
+        resultActions
+        	.andExpect(status().isBadRequest())
+        	.andExpect(jsonPath("$.code", is(ErrorCode.INPUT_VALUE_INVALID.getCode())))
+        	.andExpect(jsonPath("$.status", is(ErrorCode.INPUT_VALUE_INVALID.getStatus())))
+        	.andExpect(jsonPath("$.message", is(ErrorCode.INPUT_VALUE_INVALID.getMessage())))
+        	.andExpect(jsonPath("$.errors[0].field", is("password")))
+        	.andExpect(jsonPath("$.errors[0].value", is(dto.getPassword())));
+    }
+    
+    @Test
+    @DisplayName("로그인 실패 - Password가 blank 인 경우")
+    public void login_blank_password() throws Exception {
+        //given
+        final AccountDto.LoginReq dto = buildLoginReqBlankPassword();
+        Account account = buildAccount();
+        given(loginService.login(any(AccountDto.LoginReq.class))).willReturn(account);
+
+        //when
+        final ResultActions resultActions = requestLogin(dto);
+        
+        logger.info(resultActions.toString());
+
+        //then
+        resultActions
+        	.andExpect(status().isBadRequest())
+        	.andExpect(jsonPath("$.code", is(ErrorCode.INPUT_VALUE_INVALID.getCode())))
+        	.andExpect(jsonPath("$.status", is(ErrorCode.INPUT_VALUE_INVALID.getStatus())))
+        	.andExpect(jsonPath("$.message", is(ErrorCode.INPUT_VALUE_INVALID.getMessage())))
+        	.andExpect(jsonPath("$.errors[0].field", is("password")))
+        	.andExpect(jsonPath("$.errors[0].value", is(dto.getPassword())));
     }
 
     private ResultActions requestLogin(AccountDto.LoginReq dto) throws Exception {
@@ -85,10 +182,41 @@ public class LoginControllerTest {
    
     }
     
+    private AccountDto.LoginReq buildLoginReqNotEamilFormat() {
+        return AccountDto.LoginReq.builder()
+        		.email("tiger.korea.com")
+        		.password("lion")
+        		.build();
+   
+    }
+    
+    private AccountDto.LoginReq buildLoginReqNullPassword() {
+        return AccountDto.LoginReq.builder()
+        		.email("tiger@korea.com")
+        		.password(null)
+        		.build();
+   
+    }
+    
+    private AccountDto.LoginReq buildLoginReqEmptyPassword() {
+        return AccountDto.LoginReq.builder()
+        		.email("tiger@korea.com")
+        		.password("")
+        		.build();
+   
+    }
+    
+    private AccountDto.LoginReq buildLoginReqBlankPassword() {
+        return AccountDto.LoginReq.builder()
+        		.email("tiger@korea.com")
+        		.password("   ")
+        		.build();
+   
+    }
+    
     private Account buildAccount() {
     	return Account.builder()
-    			.firstName("호랑이")
-    			.lastName("tiger")
+    			.name(Name.builder().first("호랑이").last("tiger").build())
     			.email("tiger@korea.com")
     			.address1("주소1")
     			.zip("12345")

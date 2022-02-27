@@ -7,12 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.example.myapp.dto.AccountDto;
+import com.example.myapp.model.Name;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -30,12 +32,13 @@ public class Account {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NonNull
-    private String firstName;
-
-    @NonNull
-    private String lastName;
-
+//    @NonNull
+//    private String firstName;
+//    @NonNull
+//    private String lastName;
+    @Valid
+    private Name name;
+    
     @NonNull
     private String password;
 
@@ -57,10 +60,9 @@ public class Account {
     private Date latest_login_at;
 
     @Builder
-    public Account(String email, String firstName, String lastName, String password, String address1, String zip) {
+    public Account(String email, Name name, String password, String address1, String zip) {
     	this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.password = password;
         this.address1 = address1;
         this.zip = zip;

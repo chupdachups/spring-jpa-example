@@ -20,6 +20,7 @@ import org.springframework.dao.DuplicateKeyException;
 import com.example.myapp.dto.AccountDto;
 import com.example.myapp.entity.Account;
 import com.example.myapp.exception.AccountNotFoundException;
+import com.example.myapp.model.Name;
 import com.example.myapp.repository.AccountRepository;
 import com.example.myapp.service.AccountService;
 
@@ -106,16 +107,14 @@ public class AccountServiceTest {
                 .address1("프랑스")
                 .zip("12345")
                 .email("dictionary@france.com")
-                .firstName("나폴레옹")
-                .lastName("napol")
+                .name(Name.builder().first("나폴레옹").last("napol").build())
                 .password("short")
                 .build();
     }
     
     private AccountDto.SignUpReq buildSignUpReqFail() {
         return AccountDto.SignUpReq.builder()
-        		.firstName("호랑이")
-    			.lastName("tiger")
+    			.name(Name.builder().first("호랑이").last("tiger").build())
     			.email("tiger@korea.com")
     			.password("lion")
     			.address1("주소1")
@@ -134,8 +133,6 @@ public class AccountServiceTest {
         assertThat(signUpReq.getAddress1(), is(account.getAddress1()));
         assertThat(signUpReq.getZip(), is(account.getZip()));
         assertThat(signUpReq.getEmail(), is(account.getEmail()));
-        assertThat(signUpReq.getFirstName(), is(account.getFirstName()));
-        assertThat(signUpReq.getLastName(), is(account.getLastName()));
-        assertThat(signUpReq.getPassword(), is(account.getPassword()));
+        assertThat(signUpReq.getName(), is(account.getName()));
     }
 }

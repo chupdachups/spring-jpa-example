@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.example.myapp.controller.AccountController;
 import com.example.myapp.dto.AccountDto;
 import com.example.myapp.entity.Account;
+import com.example.myapp.model.Name;
 import com.example.myapp.service.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -63,8 +64,8 @@ public class AccountControllerTest {
                 .andExpect(jsonPath("$.address1", is(dto.getAddress1())))
                 .andExpect(jsonPath("$.zip", is(dto.getZip())))
                 .andExpect(jsonPath("$.email", is(dto.getEmail())))
-                .andExpect(jsonPath("$.firstName", is(dto.getFirstName())))
-                .andExpect(jsonPath("$.lastName", is(dto.getLastName())));
+                .andExpect(jsonPath("$.name.first", is(dto.getName().getFirst())))
+                .andExpect(jsonPath("$.name.last", is(dto.getName().getLast())));
     }
     
     @Test
@@ -83,8 +84,8 @@ public class AccountControllerTest {
                 .andExpect(jsonPath("$.address1", is(dto.getAddress1())))
                 .andExpect(jsonPath("$.zip", is(dto.getZip())))
                 .andExpect(jsonPath("$.email", is(dto.getEmail())))
-                .andExpect(jsonPath("$.firstName", is(dto.getFirstName())))
-                .andExpect(jsonPath("$.lastName", is(dto.getLastName())));
+                .andExpect(jsonPath("$.name.first", is(dto.getName().getFirst())))
+                .andExpect(jsonPath("$.name.last", is(dto.getName().getLast())));
     }
     
     @Test
@@ -135,8 +136,7 @@ public class AccountControllerTest {
                 .address1("프랑스")
                 .zip("12345")
                 .email("dictionary@france.com")
-                .firstName("나폴레옹")
-                .lastName("napol")
+                .name(Name.builder().first("나폴레옹").last("napol").build())
                 .password("short")
                 .build();
     }
