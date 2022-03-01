@@ -40,9 +40,6 @@ public class ErrorExceptionController {
 				);
 	}
 	
-//	@ExceptionHandler(value = {
-//			AccountNotFoundException.class
-//	})
 	@ExceptionHandler(AccountNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	protected ErrorResponse handleAccountNotFoundException(AccountNotFoundException e) {
