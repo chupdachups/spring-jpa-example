@@ -3,9 +3,9 @@ package com.example.myapp.dto;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 import com.example.myapp.entity.Account;
+import com.example.myapp.model.Address;
 import com.example.myapp.model.Name;
 
 import lombok.AccessLevel;
@@ -29,18 +29,15 @@ public class AccountDto {
     	@NotBlank
         private String password;
     	
-    	@NotEmpty
-        private String address1;
-    	@NotEmpty
-        private String zip;
+    	@Valid
+    	private Address address;
 
         @Builder
-        public SignUpReq(String email, Name name, String password, String address1, String zip) {
+        public SignUpReq(String email, Name name, String password, Address address, String zip) {
             this.email = email;
             this.name = name;
             this.password = password;
-            this.address1 = address1;
-            this.zip = zip;
+            this.address = address;
         }
 
         public Account toEntity() {
@@ -48,8 +45,7 @@ public class AccountDto {
                     .email(this.email)
                     .name(this.name)
                     .password(this.password)
-                    .address1(this.address1)
-                    .zip(this.zip)
+                    .address(address)
                     .build();
         }
     }
@@ -57,13 +53,13 @@ public class AccountDto {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class UpdateAccountReq {
-        private String address1;
-        private String zip;
+    	
+        @Valid
+    	private Address address;
 
         @Builder
-        public UpdateAccountReq(String address1, String zip) {
-            this.address1 = address1;
-            this.zip = zip;
+        public UpdateAccountReq(Address address, String zip) {
+            this.address = address;
         }
     }
     
@@ -89,14 +85,12 @@ public class AccountDto {
     public static class Res {
         private String email;
         private Name name;
-        private String address1;
-        private String zip;
+        private Address address;
 
         public Res(Account account) {
             this.email = account.getEmail();
             this.name = account.getName();
-            this.address1 = account.getAddress1();
-            this.zip = account.getZip();
+            this.address = account.getAddress();
         }
     }
 }

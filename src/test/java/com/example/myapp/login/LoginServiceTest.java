@@ -16,6 +16,7 @@ import com.example.myapp.dto.AccountDto;
 import com.example.myapp.entity.Account;
 import com.example.myapp.exception.AccountNotFoundException;
 import com.example.myapp.exception.WrongPasswordException;
+import com.example.myapp.model.Address;
 import com.example.myapp.model.Name;
 import com.example.myapp.repository.LoginRepository;
 import com.example.myapp.service.LoginService;
@@ -77,8 +78,10 @@ public class LoginServiceTest {
         		.name(Name.builder().first("호랑이").last("tiger").build())
     			.email("tiger@korea.com")
     			.password("lion")
-    			.address1("주소1")
-    			.zip("12345")
+    			.address(Address.builder()
+                		.address1("주소1")
+                		.zip("12345")
+                		.build())
     			.build();
    
     }

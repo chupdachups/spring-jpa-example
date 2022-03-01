@@ -26,6 +26,7 @@ import com.example.myapp.dto.AccountDto;
 import com.example.myapp.entity.Account;
 import com.example.myapp.error.ErrorCode;
 import com.example.myapp.error.ErrorExceptionController;
+import com.example.myapp.model.Address;
 import com.example.myapp.model.Name;
 import com.example.myapp.service.LoginService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -68,8 +69,8 @@ public class LoginControllerTest {
         //then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.address1", is(account.getAddress1())))
-                .andExpect(jsonPath("$.zip", is(account.getZip())))
+                .andExpect(jsonPath("$.address.address1", is(account.getAddress().getAddress1())))
+                .andExpect(jsonPath("$.address.zip", is(account.getAddress().getZip())))
                 .andExpect(jsonPath("$.email", is(account.getEmail())))
                 .andExpect(jsonPath("$.name.first", is(account.getName().getFirst())))
                 .andExpect(jsonPath("$.name.last", is(account.getName().getLast())));
@@ -218,8 +219,10 @@ public class LoginControllerTest {
     	return Account.builder()
     			.name(Name.builder().first("호랑이").last("tiger").build())
     			.email("tiger@korea.com")
-    			.address1("주소1")
-    			.zip("12345")
+    			.address(Address.builder()
+                		.address1("주소1")
+                		.zip("12345")
+                		.build())
     			.build();
     }
 

@@ -20,6 +20,7 @@ import org.springframework.dao.DuplicateKeyException;
 import com.example.myapp.dto.AccountDto;
 import com.example.myapp.entity.Account;
 import com.example.myapp.exception.AccountNotFoundException;
+import com.example.myapp.model.Address;
 import com.example.myapp.model.Name;
 import com.example.myapp.repository.AccountRepository;
 import com.example.myapp.service.AccountService;
@@ -98,14 +99,16 @@ public class AccountServiceTest {
         final Account account = accountService.updateAccount(anyString(), dto);
 
         //then
-        assertThat(dto.getAddress1(), is(account.getAddress1()));
-        assertThat(dto.getZip(), is(account.getZip()));
+        assertThat(dto.getAddress().getAddress1(), is(account.getAddress().getAddress1()));
+        assertThat(dto.getAddress().getZip(), is(account.getAddress().getZip()));
     }
     
     private AccountDto.SignUpReq buildSignUpReq() {
         return AccountDto.SignUpReq.builder()
-                .address1("프랑스")
-                .zip("12345")
+        		.address(Address.builder()
+                		.address1("프랑스")
+                		.zip("12345")
+                		.build())
                 .email("dictionary@france.com")
                 .name(Name.builder().first("나폴레옹").last("napol").build())
                 .password("short")
@@ -117,22 +120,28 @@ public class AccountServiceTest {
     			.name(Name.builder().first("호랑이").last("tiger").build())
     			.email("tiger@korea.com")
     			.password("lion")
-    			.address1("주소1")
-    			.zip("12345")
+    			.address(Address.builder()
+                		.address1("주소1")
+                		.zip("12345")
+                		.build())
     			.build();
     }
     
     private AccountDto.UpdateAccountReq buildUpdateAccountReq() {
         return AccountDto.UpdateAccountReq.builder()
-                .address1("korea")
-                .zip("98765")
+        		.address(Address.builder()
+        				.address1("코리아")
+        				.zip("98765")
+        				.build())
                 .build();
     }
     
     private void assertThatEqual(AccountDto.SignUpReq signUpReq, Account account) {
-        assertThat(signUpReq.getAddress1(), is(account.getAddress1()));
-        assertThat(signUpReq.getZip(), is(account.getZip()));
+        assertThat(signUpReq.getAddress().getAddress1(), is(account.getAddress().getAddress1()));
+        assertThat(signUpReq.getAddress().getZip(), is(account.getAddress().getZip()));
         assertThat(signUpReq.getEmail(), is(account.getEmail()));
-        assertThat(signUpReq.getName(), is(account.getName()));
+//        assertThat(signUpReq.getName(), is(account.getName()));
+        assertThat(signUpReq.getName().getFirst(), is(account.getName().getFirst()));
+        assertThat(signUpReq.getName().getLast(), is(account.getName().getLast()));
     }
 }

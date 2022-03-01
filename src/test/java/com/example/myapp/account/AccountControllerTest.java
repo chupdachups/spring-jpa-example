@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.example.myapp.controller.AccountController;
 import com.example.myapp.dto.AccountDto;
 import com.example.myapp.entity.Account;
+import com.example.myapp.model.Address;
 import com.example.myapp.model.Name;
 import com.example.myapp.service.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,8 +62,8 @@ public class AccountControllerTest {
         //then
         resultActions
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.address1", is(dto.getAddress1())))
-                .andExpect(jsonPath("$.zip", is(dto.getZip())))
+                .andExpect(jsonPath("$.address.address1", is(dto.getAddress().getAddress1())))
+                .andExpect(jsonPath("$.address.zip", is(dto.getAddress().getZip())))
                 .andExpect(jsonPath("$.email", is(dto.getEmail())))
                 .andExpect(jsonPath("$.name.first", is(dto.getName().getFirst())))
                 .andExpect(jsonPath("$.name.last", is(dto.getName().getLast())));
@@ -81,8 +82,8 @@ public class AccountControllerTest {
         //then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.address1", is(dto.getAddress1())))
-                .andExpect(jsonPath("$.zip", is(dto.getZip())))
+                .andExpect(jsonPath("$.address.address1", is(dto.getAddress().getAddress1())))
+                .andExpect(jsonPath("$.address.zip", is(dto.getAddress().getZip())))
                 .andExpect(jsonPath("$.email", is(dto.getEmail())))
                 .andExpect(jsonPath("$.name.first", is(dto.getName().getFirst())))
                 .andExpect(jsonPath("$.name.last", is(dto.getName().getLast())));
@@ -94,8 +95,10 @@ public class AccountControllerTest {
         //given
         final AccountDto.UpdateAccountReq dto = buildUpdateAccountReq();
         final Account account = Account.builder()
-                .address1(dto.getAddress1())
-                .zip(dto.getZip())
+                .address(Address.builder()
+                		.address1(dto.getAddress().getAddress1())
+                		.zip(dto.getAddress().getZip())
+                		.build())
                 .build();
 
         given(accountService.updateAccount(anyString(), any(AccountDto.UpdateAccountReq.class))).willReturn(account);
@@ -106,8 +109,8 @@ public class AccountControllerTest {
         //then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.address1", is(dto.getAddress1())))
-                .andExpect(jsonPath("$.zip", is(dto.getZip())));
+                .andExpect(jsonPath("$.address.address1", is(dto.getAddress().getAddress1())))
+                .andExpect(jsonPath("$.address.zip", is(dto.getAddress().getZip())));
 
     }
     
@@ -133,8 +136,10 @@ public class AccountControllerTest {
 
     private AccountDto.SignUpReq buildSignUpReq() {
         return AccountDto.SignUpReq.builder()
-                .address1("프랑스")
-                .zip("12345")
+                .address(Address.builder()
+                		.address1("프랑스")
+                		.zip("12345")
+                		.build())
                 .email("dictionary@france.com")
                 .name(Name.builder().first("나폴레옹").last("napol").build())
                 .password("short")
@@ -143,8 +148,10 @@ public class AccountControllerTest {
     
     private AccountDto.UpdateAccountReq buildUpdateAccountReq() {
         return AccountDto.UpdateAccountReq.builder()
-                .address1("코리아")
-                .zip("98765")
+        		.address(Address.builder()
+        				.address1("코리아")
+        				.zip("98765")
+        				.build())
                 .build();
     }
 
